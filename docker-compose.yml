@@ -1,0 +1,24 @@
+version: '2'
+services:
+ 
+ elastalert:
+    image: myelastalert:latest
+    container_name: elastalert
+    restart: always
+    expose:
+        - "3030"
+    environment:
+     - ELASTICSEARCH_HOST=192.168.12.211
+     - ELASTICSEARCH_PORT=9200
+     - ELASTICSEARCH_TLS=False
+     - ELASTICSEARCH_TLS_VERIFY=True
+     - ELASTALERT_INDEX=elastalert_status
+    volumes:
+      - /srv/elasticsearch/config/elastalert/elastalert.yaml:/opt/elastalert/elastalert_config.yaml:rw
+      - /srv/elasticsearch/config/elastalert/rules:/opt/elastalert/rules
+      - /srv/elasticsearch/config/elastalert/logs:/opt/elastalert/logs
+      - /srv/elasticsearch/config/elastalert/elastalert_supervisord.conf:/opt/elastalert_supervisord.conf
+    logging:
+        options:
+            max-size: "1mb"
+            max-file: "10"

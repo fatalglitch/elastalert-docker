@@ -94,6 +94,7 @@ fi
 while ! wget ${WGET_OPTIONS} -O - "${WGET_SCHEMA}${WGET_AUTH}${ELASTICSEARCH_HOST}:${ELASTICSEARCH_PORT}" 2>/dev/null
 do
     echo "Waiting for Elasticsearch..."
+    echo "Attempting connection to ${WGET_SCHEMA}${WGET_AUTH}${ELASTICSEARCH_HOST}:${ELASTICSEARCH_PORT}...with wget ${WGET_OPTIONS} -O -"
     sleep 1
 done
 sleep 5
