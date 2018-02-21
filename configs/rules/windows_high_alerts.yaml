@@ -1,0 +1,32 @@
+name: Windows High Severity Event
+type: frequency
+index: winlogbeat-*
+num_events: 1
+timeframe:
+  minutes: 1
+
+filter:
+- query:
+    query_string:
+        query: "event_id: (4618 OR 4649 OR 4719 OR 4765 OR 4766 OR 4794 OR 4897 OR 4964 OR 5124"    
+
+  alert_text: '{{"@uuid": "{0}", "@timestamp": "{1}",  "collection": "elasticsearch.winlogbeat.wineventlog", "type": "{2}", "beat.name": "{3}", "computer_name": "{4}", "log_name": "{5}", "rule_name": "Windows Logs Event", "message": "{6}"}}'    
+alert_text_type: alert_text_only
+alert_text_args:
+- '@uuid'
+- '@timestamp'
+- type
+- beat.name
+- computer_name
+- log_name
+- message
+
+alert:
+- "rabbitmq"
+rabbitmq_host: "192.168.12.211"
+rabbitmq_port: "5672"
+rabbitmq_user: "guest"
+rabbitmq_pass: "guest"
+rabbitmq_exchange: "cyphon"
+rabbitmq_key: "watchdogs"
+rabbitmq_vhost: "cyphon"
