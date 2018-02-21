@@ -1,0 +1,31 @@
+name: Windows Logs Event
+type: frequency
+index: winlogbeat-*
+num_events: 1
+timeframe:
+  minutes: 1
+
+filter:
+- query:
+    query_string:
+        query: "NOT event_id: 51678"    
+
+alert_text: '{{"@uuid": "{0}", "@timestamp": "{1}",  "collection": "elasticsearch.winlogbeat.wineventlog", "type": "{2}", "beat.name": "{3}", "computer_name": "{4}", "log_name": "{5}", "rule_name": "Windows Logs Event"}}'    
+alert_text_type: alert_text_only
+alert_text_args:
+- '@uuid'
+- '@timestamp'
+- type
+- beat.name
+- computer_name
+- log_name
+
+alert:
+- "rabbitmq"
+rabbitmq_host: "IP"
+rabbitmq_port: "5672"
+rabbitmq_user: "guest"
+rabbitmq_pass: "guest"
+rabbitmq_exchange: "EXCHANGE"
+rabbitmq_key: "KEY"
+rabbitmq_vhost: "VHOST"
